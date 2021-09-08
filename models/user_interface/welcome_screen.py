@@ -8,7 +8,7 @@ from tkinter import (
     LEFT
 )
 from models.effects.animations import Animations
-
+from models.sqlite.validator import Validator
 
 class WelcomeScreen:
     """Classe resposável por exibir a janela inicial do programa."""
