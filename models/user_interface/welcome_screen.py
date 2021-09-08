@@ -10,6 +10,7 @@ from tkinter import (
 from models.effects.animations import Animations
 from models.sqlite.validator import Validator
 
+
 class WelcomeScreen:
     """Classe resposável por exibir a janela inicial do programa."""
     def __init__(self) -> None:
@@ -45,11 +46,11 @@ class WelcomeScreen:
     def __make_frames(self) -> None:
         """Método responsável por desenhar as molduras (frames)."""
         self.__top_frame: Frame = Frame(master=self.__main_window)
-        self.__top_frame.configure(relief="solid", borderwidth=1, width=663, height=170)
+        self.__top_frame.configure(relief="groove", borderwidth=1, width=663, height=170)  # flat, groove, raised, ridge, solid, or sunken
         self.__top_frame.grid(row=0, column=0, padx=10, pady=10)
 
         self.__bottom_frame: Frame = Frame(master=self.__main_window)
-        self.__bottom_frame.configure(relief="solid", borderwidth=1, width=663, height=160)
+        self.__bottom_frame.configure(relief="groove", borderwidth=1, width=663, height=160)
         self.__bottom_frame.grid(row=1, column=0, padx=10, pady=5)
 
     def __make_labels(self) -> None:
@@ -69,9 +70,10 @@ class WelcomeScreen:
 
     def __make_buttons(self) -> None:
         """Método responsável por desenhar os botões (buttons)."""
-        Button(master=self.__bottom_frame, image=self.__new_profile, text="Criar Perfil", font=("Ink Free", 15, "bold"), compound=LEFT, width=170).place(x=230, y=10)
-        Button(master=self.__bottom_frame, image=self.__remove_profile, text="Remover Perfil", font=("Ink Free", 15, "bold"), compound=LEFT, width=190).place(x=220, y=60)
-        Button(master=self.__bottom_frame, image=self.__exit, text="Sair", font=("Ink Free", 15, "bold"), compound=LEFT, width=100, command=lambda: exit(0)).place(x=265, y=110)
+        Button(master=self.__bottom_frame, image=self.__new_profile, text="Criar Perfil", font=("Ink Free", 15, "bold"), compound=LEFT, width=170, cursor="hand1").place(x=230, y=10)
+        if Validator().check_username(): Button(master=self.__bottom_frame, image=self.__remove_profile, text="Remover Perfil", font=("Ink Free", 15, "bold"), compound=LEFT, width=190, cursor="hand1").place(x=220, y=60)
+        else: Button(master=self.__bottom_frame, image=self.__remove_profile, text="Remover Perfil", font=("Ink Free", 15, "bold"), compound=LEFT, width=190, state="disabled", cursor="hand1").place(x=220, y=60)
+        Button(master=self.__bottom_frame, image=self.__exit, text="Sair", font=("Ink Free", 15, "bold"), compound=LEFT, width=100, command=lambda: exit(0), cursor="hand1").place(x=265, y=110)
 
     def __effects(self):
         """Método responsável por chamar todas as animações que ocorrem na tela principal"""
