@@ -3,13 +3,12 @@ from webbrowser import open
 
 
 class Animations:
-    def __init__(self, root: Tk, stringvar: StringVar, lb_github: Label) -> None:
+    def __init__(self, root: Tk, stringvar: StringVar, lb_github: Label, text: str) -> None:
         self.__root: Tk = root
         self.__stringvar: StringVar = stringvar
-        self.__text: str = "Antes de armazenar as suas senhas, crie um perfil para ter mais segurança"
+        self.__text: str = text
         self.__github: Label = lb_github
         self.__counter: int = 0
-        self.automatic_writing()
 
     def automatic_writing(self):
         """Método responsável por criar uma animação de escrita na tela inicial do programa."""
