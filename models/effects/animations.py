@@ -3,11 +3,11 @@ from webbrowser import open
 
 
 class Animations:
-    def __init__(self, root: Tk, stringvar: StringVar, lb_github: Label, text: str) -> None:
+    def __init__(self, root: Tk, stringvar: StringVar, label: Label, text: str) -> None:
         self.__root: Tk = root
         self.__stringvar: StringVar = stringvar
         self.__text: str = text
-        self.__github: Label = lb_github
+        self.__github: Label = label
         self.__counter: int = 0
 
     def automatic_writing(self):
@@ -31,6 +31,7 @@ class Animations:
                 self.__root.after(100, lambda: orange_light(label))
             else:
                 label.configure(foreground="#0000FF")
+                self.__counter = 0
 
         def orange_light(label: Label) -> None:
             """Função responsável por alterar a cor do texto para laranja."""

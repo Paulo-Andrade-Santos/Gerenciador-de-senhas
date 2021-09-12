@@ -1,11 +1,12 @@
 from sqlite3 import connect
+from tkinter.messagebox import showerror
 
 
 class DataBase:
     """Classe que representará o banco de dados"""
     def __init__(self, username: str = None):
         self.__username = username
-        self.__connection = connect("database/data_test.db")
+        self.__connection = connect("database/data.db")
         self.__cursor = self.__connection.cursor()
 
     def check_record(self, username: str):
@@ -16,8 +17,23 @@ class DataBase:
             print("Usuário não encontrado")
             self.__connection.close()
 
-    def insert_records(self, username: str, password: str):
+    def insert_record_account(self, platform: str, username: str, password: str):
+        self.__cursor.execute(f""" INSERT INTO accounts(platform, username, password) VALUES('{platform}', '{username}', '{password}')""")
+        self.__connection.commit()
+        self.__connection.close()
+
+    def insert_record_user(self, username, password):
         self.__cursor.execute(f""" INSERT INTO users(username, password) VALUES('{username}', '{password}')""")
+        self.__connection.commit()
+        self.__connection.close()
+
+    def insert_new_account(self, platform: str, username: str, password: str):
+        self.__cursor.execute(f""" INSERT INTO accounts(platform, username, password) VALUES('{platform}', '{username}', '{password}') """)
+        self.__connection.commit()
+        self.__connection.close()
+
+    def delete_account(self, username):
+        self.__cursor.execute(f""" DELETE FROM accounts WHERE username='{username}' """)
         self.__connection.commit()
         self.__connection.close()
 
@@ -27,16 +43,29 @@ class DataBase:
             self.__connection.commit()
             self.__connection.close()
         except Exception:
-            print("ERRO: ALGUM ERRO OCORREU AO EXCLUIR UM REGISTRO")
+            showerror("Erro", "Algum erro ocorreu na exclusão do registro")
             self.__connection.close()
 
     def all_records(self):
         usernames: list = list()
         for record in self.__cursor.execute(""" SELECT * FROM users """):
-            # print(record[0])
-            usernames.append(record[0])
+            usernames.append(record[0].title())
         self.__connection.close()
         return usernames
+
+    def check_password(self, password):
+        try:
+            next(self.__cursor.execute(f""" SELECT password FROM users WHERE password='{password}' """))
+            return True
+        except StopIteration:
+            return False
+
+    def show_accounts(self):
+        accounts = []
+        for all_accounts in self.__cursor.execute(""" SELECT * FROM accounts """):
+            accounts.append(all_accounts)
+        self.__connection.close()
+        return accounts
 
 
 if __name__ == "__main__":

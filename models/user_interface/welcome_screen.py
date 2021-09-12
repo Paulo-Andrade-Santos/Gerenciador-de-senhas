@@ -12,6 +12,7 @@ from tkinter.ttk import (
     Treeview,
     Style
 )
+from models.user_interface.log_into import LogInto
 from tkinter.messagebox import showinfo
 from models.effects.animations import Animations
 from models.sqlite.validator import Validator
@@ -82,11 +83,11 @@ class WelcomeScreen:
             self.__animated_label.place(x=25, y=130)
         self.__created_by: Label = Label(master=self.__main_window, text="Criado por: Paulo Andrade", foreground="#898989", font=("Segoe UI Black", 10), background=self.__background_color.get())
         self.__created_by.place(x=7, y=356)
-        self.__github: Label = Label(master=self.__main_window, text="Meu Github", foreground="#898989", font=("Segoe UI Black", 10), background=self.__background_color.get())
+        self.__github: Label = Label(master=self.__main_window, text="Github", foreground="#898989", font=("Segoe UI Black", 10), background=self.__background_color.get())
         self.__github.bind("<Enter>", lambda event: Animations.change_cursor(self.__github, 1))
         self.__github.bind("<Leave>", lambda event: Animations.change_cursor(self.__github, 0))
         self.__github.bind("<Button-1>", Animations.redirect)
-        self.__github.place(x=595, y=356)
+        self.__github.place(x=625, y=356)
 
     def __make_buttons(self) -> None:
         """Método responsável por desenhar os botões (buttons)."""
@@ -96,7 +97,10 @@ class WelcomeScreen:
         else:
             Button(master=self.__bottom_frame, image=self.__remove_profile, text="Remover Perfil", font=("Ink Free", 15, "bold"), compound=LEFT, width=190, state="disabled", cursor="hand1").place(x=self.__X_axis - 45, y=55)
             Button(master=self.__bottom_frame)
-        Button(master=self.__bottom_frame, text="Entrar", font=("Ink Free", 14, "bold"), cursor="hand1").place(x=55, y=106)
+        if Validator().check_username():
+            Button(master=self.__bottom_frame, text="Entrar", font=("Ink Free", 14, "bold"), cursor="hand1", command=self.__login_into).place(x=55, y=106)
+        else:
+            Button(master=self.__bottom_frame, text="Entrar", font=("Ink Free", 14, "bold"), cursor="hand1", state="disabled").place(x=55, y=106)
         Button(master=self.__bottom_frame, image=self.__exit, text="Sair", font=("Ink Free", 15, "bold"), compound=LEFT, width=100, command=lambda: exit(0), cursor="hand1").place(x=self.__X_axis + 45, y=105)
 
     def __make_separators(self):
@@ -109,11 +113,11 @@ class WelcomeScreen:
         style.configure('Treeview', font=("Courier New", 14))
 
         self.__registered_users: Treeview = Treeview(master=self.__bottom_frame, columns=(1,), show="headings")
-        self.__registered_users.heading("#1", text="Perfis Registrados")   # exibindo texto do cabeçalho
-        self.__registered_users.column("#1", anchor="center")    # configurando a primeiro coluna
+        self.__registered_users.heading("#1", text="Perfis Registrados")
+        self.__registered_users.column("#1", anchor="center")
 
         for record in DataBase().all_records():
-            self.__registered_users.insert("", "end", values=[record])  # registrando na árvore
+            self.__registered_users.insert("", "end", values=[record])
         self.__registered_users.place(x=325, y=0, width=335, height=158)
 
     def __effects(self):
@@ -131,11 +135,19 @@ class WelcomeScreen:
 
     def __delete_profile(self):
         try:
-            DataBase().delete_records(self.__registered_users.item(self.__registered_users.selection(), "values")[0])
+            DataBase().delete_records(self.__registered_users.item(self.__registered_users.selection(), "values")[0].lower())
             self.__registered_users.delete(self.__registered_users.selection())
             self.__make_buttons()
         except IndexError:
-            showinfo("Aviso", "Selecione um perfil ao lado para excluí-lo")
+            showinfo("Aviso", "Antes de remover um perfil, você deve selecioná-lo no campo 'perfis registrados'")
+
+    def __login_into(self):
+        try:
+            # noinspection PyStatementEffect
+            self.__registered_users.item(self.__registered_users.selection(), "values")[0]
+            LogInto(selected_user=self.__registered_users.item(self.__registered_users.selection(), "values")[0], root=self.__main_window).execute()
+        except IndexError:
+            showinfo("Aviso", "Antes de entrar em um perfil, você deve selecioná-lo no campo 'perfis registrados'")
 
     def run(self) -> None:
         """Método responsável por iniciar a execução da janela principal."""
