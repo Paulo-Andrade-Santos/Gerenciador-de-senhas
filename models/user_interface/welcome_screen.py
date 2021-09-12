@@ -103,10 +103,12 @@ class WelcomeScreen:
             Button(master=self.__bottom_frame, text="Entrar", font=("Ink Free", 14, "bold"), cursor="hand1", state="disabled").place(x=55, y=106)
         Button(master=self.__bottom_frame, image=self.__exit, text="Sair", font=("Ink Free", 15, "bold"), compound=LEFT, width=100, command=lambda: exit(0), cursor="hand1").place(x=self.__X_axis + 45, y=105)
 
-    def __make_separators(self):
+    def __make_separators(self) -> None:
+        """Método responsável por desenhar os separadores."""
         Separator(self.__bottom_frame, orient="vertical").place(x=320, y=0, height=160)
 
-    def __make_treeview(self):
+    def __make_treeview(self) -> None:
+        """Método responsável por desenhar a árvore de informações."""
         style: Style = Style()
         style.theme_use("clam")
         style.configure('Treeview.Heading', font=("Courier New", 13, "bold"), foreground="#363636")
@@ -120,8 +122,8 @@ class WelcomeScreen:
             self.__registered_users.insert("", "end", values=[record])
         self.__registered_users.place(x=325, y=0, width=335, height=158)
 
-    def __effects(self):
-        """Método responsável por chamar todas as animações que ocorrem na tela principal"""
+    def __effects(self) -> None:
+        """Método responsável por chamar todos os efeitos que ocorrem na tela inicial"""
         if not Validator().check_username():
             text = "Antes de armazenar as suas senhas, crie um perfil para ter mais segurança"
             Animations(self.__main_window, self.__automatic_writing, self.__github, text).automatic_writing()
@@ -129,11 +131,13 @@ class WelcomeScreen:
             text = "O gerenciador de senhas feito para quem quer segurança e simplicidade"
             Animations(self.__main_window, self.__automatic_writing, self.__github, text).automatic_writing()
 
-    def __add_new_profile(self):
+    def __add_new_profile(self) -> None:
+        """Método responsável por chamar a tela de novo usuário."""
         self.__main_window.destroy()
         NewProfile().run()
 
-    def __delete_profile(self):
+    def __delete_profile(self) -> None:
+        """Método responsável por deletar um usuário da tabela 'users' e da árvore de informações da tela inicial."""
         try:
             DataBase().delete_records(self.__registered_users.item(self.__registered_users.selection(), "values")[0].lower())
             self.__registered_users.delete(self.__registered_users.selection())
@@ -141,7 +145,8 @@ class WelcomeScreen:
         except IndexError:
             showinfo("Aviso", "Antes de remover um perfil, você deve selecioná-lo no campo 'perfis registrados'")
 
-    def __login_into(self):
+    def __login_into(self) -> None:
+        """Método responsável por chamar a tela de login para entrar num perfil específico."""
         try:
             # noinspection PyStatementEffect
             self.__registered_users.item(self.__registered_users.selection(), "values")[0]

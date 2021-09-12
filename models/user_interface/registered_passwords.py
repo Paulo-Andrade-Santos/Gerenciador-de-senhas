@@ -13,7 +13,8 @@ from tkinter.messagebox import showinfo
 
 class RegisteredPasswords:
     """Classe resposável por exibir o perfil do usuário selecionado."""
-    def __init__(self, username: str):
+    def __init__(self, username: str) -> None:
+        """Construtor da classe."""
         self.__username = username
         self.__main_window = Tk()
         self.__main_window.title("SinglePass")
@@ -36,11 +37,13 @@ class RegisteredPasswords:
         self.__make_tree()
         self.__make_buttons()
 
-    def __make_label(self):
+    def __make_label(self) -> None:
+        """Método responsável por desenhar os rótulos (labels)."""
         Label(master=self.__main_window, text=f"Olá, {self.__username}", font=("Courier New", 16, "bold", "underline"), foreground="#DAA520").place(x=12, y=5)
         Label(master=self.__main_window, text="Abaixo, encontram-se suas informações de cadastro:", font=("Courier New", 14), foreground="#000080").place(x=12, y=43)
 
-    def __make_tree(self):
+    def __make_tree(self) -> None:
+        """Método responsável por desenhar a árvore de informações (Treeview)."""
         style = Style()
         style.theme_use("clam")
         style.configure('Treeview.Heading', font=("Courier New", 13, "bold"), foreground="#363636")
@@ -61,13 +64,14 @@ class RegisteredPasswords:
 
         self.__tree.place(x=12, y=70, width=760, height=350)
 
-    def __make_buttons(self):
+    def __make_buttons(self) -> None:
+        """Método responsável por desenhar os botões."""
         Button(master=self.__main_window, text="Adicionar", font=("Courier New", 13), width=18, command=self.__insert).place(x=50, y=430)
         Button(master=self.__main_window, text="Remover", font=("Courier New", 13), width=18, command=self.__remove).place(x=300, y=430)
         Button(master=self.__main_window, text="Voltar", font=("Courier New", 13), width=18, command=self.__to_back).place(x=550, y=430)
 
-    def __insert(self):
-        """Caixa de diálogo para receber as informações do novo registro."""
+    def __insert(self) -> None:
+        """Método responsável por desenhar uma caixa de diálogo para receber as informações do novo registro."""
 
         def data(event=None, **kwargs):
             if len(platform.get()) != 0 and len(username.get()) != 0 and len(password.get()) != 0:
@@ -98,7 +102,8 @@ class RegisteredPasswords:
         Button(master=new_record, text="Cancelar", font=("Courier New", 13), width=10, command=lambda: new_record.destroy()).place(x=205, y=240)
         new_record.mainloop()
 
-    def __remove(self):
+    def __remove(self) -> None:
+        """Método responsável por apagar os registros do usuário do banco de dados e da árvore de informações."""
         try:
             DataBase().delete_account(self.__tree.item(self.__tree.selection(), "values")[1])
             self.__tree.delete(self.__tree.selection())
@@ -106,10 +111,12 @@ class RegisteredPasswords:
             showinfo(title="Aviso", message="Selecione o registro antes de deletá-lo")
             self.run()
 
-    def __to_back(self):
+    def __to_back(self) -> None:
+        """Método responsável por sair desta tela e voltar para a tela inicial."""
         from models.user_interface.welcome_screen import WelcomeScreen
         self.__main_window.destroy()
         WelcomeScreen().run()
 
-    def run(self):
+    def run(self) -> None:
+        """Método responsável por rodar esta tela."""
         self.__main_window.mainloop()
