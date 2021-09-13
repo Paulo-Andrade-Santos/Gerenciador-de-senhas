@@ -48,6 +48,7 @@ class WelcomeScreen:
         self.__new_profile: PhotoImage = PhotoImage(file="images/new_profile_02_32px.png")
         self.__remove_profile: PhotoImage = PhotoImage(file="images/remove_profile_02_32px.png")
         self.__exit: PhotoImage = PhotoImage(file="images/exit_01.png")
+        self.__to_entry = PhotoImage(file="images/entry_01_32px.png")
 
         # Chamando todas as funções responsáveis por desenhar os ítens necessários na tela:
         self.__make_frames()
@@ -98,10 +99,10 @@ class WelcomeScreen:
             Button(master=self.__bottom_frame, image=self.__remove_profile, text="Remover Perfil", font=("Ink Free", 15, "bold"), compound=LEFT, width=190, state="disabled", cursor="hand1").place(x=self.__X_axis - 45, y=55)
             Button(master=self.__bottom_frame)
         if Validator().check_username():
-            Button(master=self.__bottom_frame, text="Entrar", font=("Ink Free", 14, "bold"), cursor="hand1", command=self.__login_into).place(x=55, y=106)
+            Button(master=self.__bottom_frame, text="Entrar", image=self.__to_entry, compound=LEFT, font=("Ink Free", 14, "bold"), cursor="hand1", command=self.__login_into).place(x=45, y=106)
         else:
-            Button(master=self.__bottom_frame, text="Entrar", font=("Ink Free", 14, "bold"), cursor="hand1", state="disabled").place(x=55, y=106)
-        Button(master=self.__bottom_frame, image=self.__exit, text="Sair", font=("Ink Free", 15, "bold"), compound=LEFT, width=100, command=lambda: exit(0), cursor="hand1").place(x=self.__X_axis + 45, y=105)
+            Button(master=self.__bottom_frame, text="Entrar", image=self.__to_entry, compound=LEFT, font=("Ink Free", 14, "bold"), cursor="hand1", state="disabled").place(x=45, y=106)
+        Button(master=self.__bottom_frame, image=self.__exit, text="Sair", font=("Ink Free", 15, "bold"), compound=LEFT, width=100, command=lambda: exit(0), cursor="hand1").place(x=self.__X_axis + 55, y=105)
 
     def __make_separators(self) -> None:
         """Método responsável por desenhar os separadores."""

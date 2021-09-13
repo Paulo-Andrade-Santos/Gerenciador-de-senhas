@@ -5,7 +5,7 @@ from tkinter.messagebox import showerror
 class DataBase:
     """Classe responsável por realizar todas as operações envolvendo o banco de dados da aplicação."""
     def __init__(self, username: str = None) -> None:
-        """Contrutor da classe."""
+        """Construtor da classe."""
         self.__username = username
         self.__connection = connect("database/data.db")
         self.__cursor = self.__connection.cursor()

@@ -1,9 +1,11 @@
-from tkinter import(
+from tkinter import (
     Tk,
     Label,
     Button,
     StringVar,
-    Entry
+    Entry,
+    PhotoImage,
+    LEFT
 )
 from tkinter.ttk import Treeview
 from tkinter.ttk import Style
@@ -25,6 +27,11 @@ class RegisteredPasswords:
             self.__main_window.winfo_screenwidth() / 2 - (self.__main_window.winfo_screenwidth() / 2) / 2 - 100,
             self.__main_window.winfo_screenheight() / 2 - (self.__main_window.winfo_screenheight() / 2 + 100) / 2 - 50
         ))
+
+        # Imagens que serão utilizads nos botões:
+        self.__new_record = PhotoImage(file="images/new_record_32px.png")
+        self.__back = PhotoImage(file="images/back_32px.png")
+        self.__delete_record = PhotoImage(file="images/delete_record_32px.png")
 
         # Contador:
         self.__contador = 0
@@ -66,9 +73,9 @@ class RegisteredPasswords:
 
     def __make_buttons(self) -> None:
         """Método responsável por desenhar os botões."""
-        Button(master=self.__main_window, text="Adicionar", font=("Courier New", 13), width=18, command=self.__insert).place(x=50, y=430)
-        Button(master=self.__main_window, text="Remover", font=("Courier New", 13), width=18, command=self.__remove).place(x=300, y=430)
-        Button(master=self.__main_window, text="Voltar", font=("Courier New", 13), width=18, command=self.__to_back).place(x=550, y=430)
+        Button(master=self.__main_window, text="Adicionar", image=self.__new_record, compound=LEFT, cursor="hand1",  font=("Courier New", 13), command=self.__insert).place(x=50, y=430)
+        Button(master=self.__main_window, text="Remover", image=self.__delete_record, compound=LEFT, font=("Courier New", 13), width=110, cursor="hand1", command=self.__remove).place(x=300, y=430)
+        Button(master=self.__main_window, text="Voltar", image=self.__back, compound=LEFT, width=110, cursor="hand1", font=("Courier New", 13), command=self.__to_back).place(x=550, y=430)
 
     def __insert(self) -> None:
         """Método responsável por desenhar uma caixa de diálogo para receber as informações do novo registro."""
@@ -98,7 +105,7 @@ class RegisteredPasswords:
         password = Entry(master=new_record, font=("Courier New", 13), width=40)
         password.bind("<Return>", data)
         password.place(x=60, y=180)
-        Button(master=new_record, text="Registrar", font=("Courier New", 13), command=lambda: data(service=platform.get(), user=username.get(), passw=password.get())).place(x=60, y=240)
+        Button(master=new_record, text="Registrar", width=10, font=("Courier New", 13), command=lambda: data(service=platform.get(), user=username.get(), passw=password.get())).place(x=60, y=240)
         Button(master=new_record, text="Cancelar", font=("Courier New", 13), width=10, command=lambda: new_record.destroy()).place(x=205, y=240)
         new_record.mainloop()
 
