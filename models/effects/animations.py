@@ -53,4 +53,4 @@ class Animations:
     @staticmethod
     def redirect(event) -> None:
         """Método responsável por direcionar o usuário para o github"""
-        open("https://github.com/Paulo-Andrade-Santos?tab=repositories")
+        open("https://github.com/PauloAndradeDev?tab=repositories")
