@@ -24,13 +24,15 @@ para o SinglePass por dois motivos:
 
 2. O SinglePass foi criado para ser algo enxuto (simples), porém, eficiente. Ou seja, a propósta é ter um código "leve" com bastante performance.
 
->• Primeira observação: por ser a primeira versão, o SinglePass pode conter alguns bugs ainda não corrigidos, mas a próxima versão saíra em breve com os possíveis bugs corrigidos. 
-
->• Segunda observação: As informações armazenadas no banco de dados não estão sob nenhum protocolo de segurança (criptografia), justamente por se tratar de um protótipo.
-
-## >>>> Imagens capturadas durante o uso do SinglePass <<<<
+## • Imagens capturadas durante o uso do SinglePass:
 ![Github logo](https://github.com/PauloAndradeDev/Gerenciador-de-senhas/blob/main/SinglePass01.PNG)
 ![Github logo](https://github.com/PauloAndradeDev/Gerenciador-de-senhas/blob/main/SinglePass02.PNG)
 ![Github logo](https://github.com/PauloAndradeDev/Gerenciador-de-senhas/blob/main/SinglePass04.PNG)
 ![Github logo](https://github.com/PauloAndradeDev/Gerenciador-de-senhas/blob/main/SinglePass05.PNG)
 ![Github logo](https://github.com/PauloAndradeDev/Gerenciador-de-senhas/blob/main/SinglePass06.PNG)
+
+## • Observações à respeito do SinglePass:
+
+>• Primeira observação: por ser a primeira versão, o SinglePass pode conter alguns bugs ainda não corrigidos, mas a próxima versão sairá em breve com os possíveis bugs corrigidos. 
+
+>• Segunda observação: As informações armazenadas no banco de dados não estão sob nenhum protocolo de segurança (criptografia), justamente por se tratar de um protótipo.
