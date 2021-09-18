@@ -23,3 +23,7 @@ para o SinglePass por dois motivos:
 1. O SinglePass é apenas um **protótipo**, portanto, não foi constatada a necessidade de vincularmos a ele um banco de dados mais robusto; e
 
 2. O SinglePass foi criado para ser algo enxuto (simples), porém, eficiente. Ou seja, a propósta é ter um código "leve" com bastante performance.
+
+>• Primeira observação: por ser a primeira versão, o SinglePass pode conter alguns bugs ainda não corrigidos, mas a próxima versão saíra em breve com os possíveis bugs corrigidos. 
+
+>• Segunda observação: As informações armazenadas no banco de dados não estão sob nenhum protocolo de segurança (criptografia), justamente por se tratar de um protótipo.
